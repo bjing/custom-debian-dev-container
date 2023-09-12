@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t my-base-dev-container:latest .
+docker build -t dev-container-base:latest .
