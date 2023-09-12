@@ -1,7 +1,7 @@
 FROM debian:testing-slim
 
 RUN apt-get update
-RUN apt-get install -y git vim curl sudo procps net-tools jq nodejs
+RUN apt-get install -y git vim curl sudo procps net-tools jq
 
 
 ##############
@@ -34,12 +34,12 @@ RUN ~/.scm_breeze/install.sh
 
 
 #######################
-# VIM Config
+# Provide vim setup files under /home/code/install, leave it to the user to install
 #######################
-COPY .vimrc $USER_HOME/.vimrc
-RUN sudo chown $USERNAME:$USERNAME .vimrc
-# Install Vim plugins
-RUN vim +PlugInstall +qall
+RUN mkdir ${USER_HOME}/install
+COPY scripts/.vimrc ${USER_HOME}/install/.vimrc
+COPY scripts/setup_vim.sh ${USER_HOME}/install/setup_vim.sh
+COPY scripts/coc-settings.json ${USER_HOME}/install/coc-settings.json
 
 # Command to run when container starts, overrideable
 CMD /bin/bash
